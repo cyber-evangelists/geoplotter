@@ -1,0 +1,13 @@
+version: "3.9"
+services:
+  geo-plotter-be:
+    depends_on:
+      - geoplotter-db
+    build: .
+    ports:
+      - "8000:8000"
+
+  geoplotter-db:
+    image: "mongo:latest"
+    ports:
+      - "27017:27017"
