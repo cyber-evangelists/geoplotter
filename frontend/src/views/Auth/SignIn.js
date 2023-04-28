@@ -13,6 +13,7 @@ import {
   Text,
   useColorModeValue,
 } from "@chakra-ui/react";
+import axios from "axios";
 // Assets
 import signInImage from "assets/img/signInImage.png";
 
@@ -20,6 +21,23 @@ function SignIn() {
   // Chakra color mode
   const titleColor = useColorModeValue("teal.300", "teal.200");
   const textColor = useColorModeValue("gray.400", "white");
+  const [email, setEmail] = React.useState('')
+  const [password, setPassword] = React.useState('')
+
+  const handleSignIn = async (e) => {
+    e.preventDefault();
+    try {
+      const { data } = await axios.post('/api/users/login', {
+        email,
+        password,
+      });
+
+      console.log(data);
+    } catch (error) {
+      console.log('ERROR == ', error)
+    }
+  }
+
   return (
     <Flex position='relative' mb='40px'>
       <Flex
@@ -63,6 +81,8 @@ function SignIn() {
                 type='text'
                 placeholder='Your email adress'
                 size='lg'
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
               />
               <FormLabel ms='4px' fontSize='sm' fontWeight='normal'>
                 Password
@@ -74,6 +94,8 @@ function SignIn() {
                 type='password'
                 placeholder='Your password'
                 size='lg'
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
               />
               <FormControl display='flex' alignItems='center'>
                 <Switch id='remember-login' colorScheme='teal' me='10px' />
@@ -99,7 +121,8 @@ function SignIn() {
                 }}
                 _active={{
                   bg: "teal.400",
-                }}>
+                }}
+                onClick={handleSignIn}>
                 SIGN IN
               </Button>
             </FormControl>
