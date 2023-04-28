@@ -9,6 +9,7 @@ import SignUp from "views/Auth/SignUp.js";
 import Main from "views/Dashboard/Main";
 import Login from "views/Dashboard/Main/Login";
 import Register from "views/Dashboard/Main/Register";
+import BoxModel from "views/Dashboard/Main/BoxModel.jsx";
 import Login2 from "views/Dashboard/Main/Login2";
 import Polygon from "views/Dashboard/Main/Polygon";
 
@@ -21,6 +22,7 @@ import {
   RocketIcon,
   SupportIcon,
 } from "components/Icons/Icons";
+import { CalendarIcon } from "@chakra-ui/icons";
 
 var dashRoutes = [
   {
@@ -53,6 +55,14 @@ var dashRoutes = [
     rtlName: "لوحة القيادة",
     icon: <CreditIcon color="inherit" />,
     component: Register,
+    layout: "/admin",
+  },
+  {
+    path: "/boxModel",
+    name: "BoxModel",
+    rtlName: "لوحة القيادة",
+    icon: <CalendarIcon color="inherit" />,
+    component: BoxModel,
     layout: "/admin",
   },
   {
