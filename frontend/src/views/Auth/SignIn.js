@@ -12,6 +12,7 @@ import {
   Switch,
   Text,
   useColorModeValue,
+  useToast,
 } from "@chakra-ui/react";
 import axios from "axios";
 // Assets
@@ -23,6 +24,7 @@ function SignIn() {
   const textColor = useColorModeValue("gray.400", "white");
   const [email, setEmail] = React.useState('')
   const [password, setPassword] = React.useState('')
+  const toast = useToast()
 
   const handleSignIn = async (e) => {
     e.preventDefault();
@@ -34,7 +36,13 @@ function SignIn() {
 
       console.log(data);
     } catch (error) {
-      console.log('ERROR == ', error)
+      toast({
+        position: 'top',
+        title: error.message,
+        status: 'error',
+        duration: 2000,
+        isClosable: true,
+      });
     }
   }
 

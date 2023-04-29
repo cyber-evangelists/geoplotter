@@ -12,6 +12,7 @@ import {
   Switch,
   Text,
   useColorModeValue,
+  useToast,
 } from "@chakra-ui/react";
 // Assets
 import BgSignUp from "assets/img/BgSignUp.png";
@@ -23,6 +24,35 @@ function SignUp() {
   const textColor = useColorModeValue("gray.700", "white");
   const bgColor = useColorModeValue("white", "gray.700");
   const bgIcons = useColorModeValue("teal.200", "rgba(255, 255, 255, 0.5)");
+  const toast = useToast()
+  const [signupUsers, setSignupUsers] = React.useState({
+    name: '',
+    email: '',
+    password: '',
+  })
+
+  const handleSignup = async (e) => {
+    e.preventDefault();
+    try {
+      const { data } = await axios.post('/api/users/signup', signupUsers);
+      toast({
+        position: 'top',
+        title: "Successfully Registered!",
+        status: 'success',
+        duration: 2000,
+        isClosable: true,
+      });
+      console.log(data);
+    } catch (error) {
+      toast({
+        position: 'top',
+        title: error.message,
+        status: 'error',
+        duration: 2000,
+        isClosable: true,
+      });
+    }
+  }
   return (
     <Flex
       direction='column'
@@ -162,6 +192,11 @@ function SignUp() {
               placeholder='Your full name'
               mb='24px'
               size='lg'
+              value={signupUsers.name}
+              onChange={(e) => setSignupUsers({
+                ...signupUsers,
+                name: e.target.value
+              })}
             />
             <FormLabel ms='4px' fontSize='sm' fontWeight='normal'>
               Email
@@ -174,6 +209,11 @@ function SignUp() {
               placeholder='Your email address'
               mb='24px'
               size='lg'
+              value={signupUsers.email}
+              onChange={(e) => setSignupUsers({
+                ...signupUsers,
+                email: e.target.value
+              })}
             />
             <FormLabel ms='4px' fontSize='sm' fontWeight='normal'>
               Password
@@ -186,6 +226,11 @@ function SignUp() {
               placeholder='Your password'
               mb='24px'
               size='lg'
+              value={signupUsers.password}
+              onChange={(e) => setSignupUsers({
+                ...signupUsers,
+                password: e.target.value
+              })}
             />
             <FormControl display='flex' alignItems='center' mb='24px'>
               <Switch id='remember-login' colorScheme='teal' me='10px' />
@@ -207,7 +252,8 @@ function SignUp() {
               }}
               _active={{
                 bg: "teal.400",
-              }}>
+              }}
+              onClick={handleSignup}>
               SIGN UP
             </Button>
           </FormControl>
