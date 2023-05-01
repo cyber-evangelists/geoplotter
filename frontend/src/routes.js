@@ -1,26 +1,13 @@
-// import
-import Dashboard from "views/Dashboard/Dashboard";
-import Tables from "views/Dashboard/Tables";
-import Billing from "views/Dashboard/Billing";
-import RTLPage from "views/Dashboard/RTL";
-import Profile from "views/Dashboard/Profile";
-import SignIn from "views/Auth/SignIn.js";
-import SignUp from "views/Auth/SignUp.js";
 import Main from "views/Dashboard/Main";
-import Login from "views/Dashboard/Main/Login";
-import Register from "views/Dashboard/Main/Register";
+import Shape from "views/Dashboard/Main/Shape.jsx"
 import BoxModel from "views/Dashboard/Main/BoxModel.jsx";
-import Login2 from "views/Dashboard/Main/Login2";
-import Polygon from "views/Dashboard/Main/Polygon";
+import Login from "views/Dashboard/Main/Login.jsx";
+import Signup from "views/Dashboard/Main/Signup.jsx";
 
 import {
   HomeIcon,
   StatsIcon,
   CreditIcon,
-  PersonIcon,
-  DocumentIcon,
-  RocketIcon,
-  SupportIcon,
 } from "components/Icons/Icons";
 import { CalendarIcon } from "@chakra-ui/icons";
 
@@ -34,27 +21,11 @@ var dashRoutes = [
     layout: "/admin",
   },
   {
-    path: "/login",
-    name: "Login",
-    rtlName: "لوحة القيادة",
-    icon: <StatsIcon color="inherit" />,
-    component: Login,
-    layout: "/admin",
-  },
-  {
-    path: "/logn-2",
-    name: "Login 2",
-    rtlName: "لوحة القيادة",
-    icon: <StatsIcon color="inherit" />,
-    component: Login2,
-    layout: "/admin",
-  },
-  {
-    path: "/register",
-    name: "Register",
+    path: "/shape",
+    name: "Shape",
     rtlName: "لوحة القيادة",
     icon: <CreditIcon color="inherit" />,
-    component: Register,
+    component: Shape,
     layout: "/admin",
   },
   {
@@ -66,11 +37,19 @@ var dashRoutes = [
     layout: "/admin",
   },
   {
-    path: "/polygon",
-    name: "Polygon",
+    path: "/login",
+    name: "Login",
+    rtlName: "لوحة القيادة",
+    icon: <StatsIcon color="inherit" />,
+    component: Login,
+    layout: "/admin",
+  },
+  {
+    path: "/signup",
+    name: "Signup",
     rtlName: "لوحة القيادة",
     icon: <CreditIcon color="inherit" />,
-    component: Polygon,
+    component: Signup,
     layout: "/admin",
   },
 ];

@@ -29,10 +29,10 @@ export default function Main() {
     return (
         <Center pt="300px">
             <Box>
-                <Input placeholder="Email" mb="3"
+                <Input type='email' placeholder="Email" mb="3"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)} />
-                <Input placeholder="Password" mb="3"
+                <Input type='password' placeholder="Password" mb="3"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)} />
                 <Button onClick={handleSubmit}>Submit</Button>

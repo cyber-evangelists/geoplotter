@@ -1,13 +1,13 @@
 import { Button, Box, Center, Input, useToast } from '@chakra-ui/react';
 import React from 'react';
+import axios from 'axios'
 
 export default function Main() {
     const [registerUsers, setRegisterUsers] = React.useState({
-        firstName: '',
-        lastName: '',
+        name: '',
         email: '',
-        companyName: '',
-        organizationNumber: '',
+        password: '',
+        confirmPassword: '',
     })
     const toast = useToast()
 
@@ -36,25 +36,21 @@ export default function Main() {
     return (
         <Center pt="200px">
             <Box>
-                <Input placeholder="First Name" mb="3" value={registerUsers.firstName} onChange={(e) => setRegisterUsers({
+                <Input type='name' placeholder="Name" mb="3" value={registerUsers.name} onChange={(e) => setRegisterUsers({
                     ...registerUsers,
-                    firstName: e.target.value,
+                    name: e.target.value,
                 })} />
-                <Input placeholder="Second Name" mb="3" value={registerUsers.lastName} onChange={(e) => setRegisterUsers({
-                    ...registerUsers,
-                    lastName: e.target.value,
-                })} />
-                <Input placeholder="Email Id" mb="3" value={registerUsers.email} onChange={(e) => setRegisterUsers({
+                <Input type='email' placeholder="Email" mb="3" value={registerUsers.email} onChange={(e) => setRegisterUsers({
                     ...registerUsers,
                     email: e.target.value,
                 })} />
-                <Input placeholder="Company Name" mb="3" value={registerUsers.companyName} onChange={(e) => setRegisterUsers({
+                <Input type='password' placeholder="Password" mb="3" value={registerUsers.password} onChange={(e) => setRegisterUsers({
                     ...registerUsers,
-                    companyName: e.target.value,
+                    password: e.target.value,
                 })} />
-                <Input placeholder="Organization number" mb="3" value={registerUsers.organizationNumber} onChange={(e) => setRegisterUsers({
+                <Input type='password' placeholder="Confirm Password" mb="3" value={registerUsers.confirmPassword} onChange={(e) => setRegisterUsers({
                     ...registerUsers,
-                    organizationNumber: e.target.value,
+                    confirmPassword: e.target.value,
                 })} />
                 <Button onClick={handleSubmit}>Submit</Button>
             </Box>
