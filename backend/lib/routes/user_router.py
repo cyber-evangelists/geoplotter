@@ -1,4 +1,5 @@
 from fastapi import APIRouter, HTTPException, Response
+from fastapi.responses import PlainTextResponse
 
 from lib.models.entities.user_entity import UserEntity
 from lib.models.requests.login_request import LoginRequest
@@ -15,7 +16,7 @@ async def user_login(body: LoginRequest, response: Response):
         payload = {"userId": str(user.id)}
         response.set_cookie({"Authorization": myjwt.encode(payload)})
 
-        return
+        return PlainTextResponse("ok")
 
     raise HTTPException(detail="Invalid credentials", status_code=401)
 
@@ -35,3 +36,4 @@ async def user_register(body: SignupRequest, response: Response):
     inserted_user = await UserEntity.find_one({"email": body.email})
     payload = {"userId": str(inserted_user.id)}
     response.set_cookie("Authorization", myjwt.encode(payload))
+    return PlainTextResponse("ok")
