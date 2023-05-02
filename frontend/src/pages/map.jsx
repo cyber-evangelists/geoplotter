@@ -6,6 +6,7 @@ import {
   StatsIcon,
   CreditIcon,
 } from 'components/Icons/Icons';
+import Head from 'next/head';
 
 const MapPanel = dynamic(() => import('components/panels/MapPanel'), { ssr: false });
 

@@ -2,6 +2,8 @@ import * as React from 'react'
 import { Flex, Box, Text, Input, Button, Center, useToast } from '@chakra-ui/react';
 import html2canvas from 'html2canvas';
 
+const multiplier = 10;
+
 function captureScreen() {
   const captureArea = document.getElementById('capture-area');
 
@@ -89,7 +91,7 @@ function PlotBoxModel() {
   }
   return (
     <>
-      <Box id='capture-area'>
+      <Box id="capture-area">
         <Flex>
           <Box w="13%">
             <Flex direction={'column'} mt='88%'>
@@ -100,7 +102,7 @@ function PlotBoxModel() {
             </Flex>
           </Box>
 
-          <Box w="75%" h={420} mt="2%" overflow={'auto'}>
+          <Box w="75%" mt="2%">
             <Box>
               <Flex>
                 <Input variant='flushed' p={1} type='number' width={'21%'} ml={3} value={width1} onChange={(e) => setWidth1(e.target.value)} />
@@ -111,11 +113,50 @@ function PlotBoxModel() {
             </Box>
 
             <Box position={'relative'} mt='7%'>
-              <Box height={`${(Number(responsiveHeight.height4)) + 220}px`} width={`${responsiveWidth.width1 - 880}px`} bg={'black'} position={'relative'} top={'0'} left={'0'} ></Box>
-              <Box height={`${(Number(responsiveHeight.height3)) + 230}px`} width={`${(Number(responsiveWidth.width2)) + 640}px`} bg={'red'} position={'absolute'} top={'0'} left={'0'}></Box>
-              <Box height={`${(Number(responsiveHeight.height2)) + 175}px`} width={`${(Number(responsiveWidth.width3)) + 350}px`} bg={'#76E4F7'} position={'absolute'} top={'0'} left={'190px'}></Box>
-              <Box height={`${(Number(responsiveHeight.height1)) + 115}px`} width={`${(Number(responsiveWidth.width4)) + 430}px`} bg={'#F6E05E'} position={'absolute'} top={'0'} left={'290px'}></Box>
-              <Box height={'80px'} width={'40px'} bg={'#FFFFFF'} position={'absolute'} top={'0'} left={'580px'}></Box>
+              <Box
+                height={`${responsiveHeight.height4}px`}
+                width="3880px"
+                bg="black"
+                position="absolute"
+                top={`${(responsiveHeight.height1 + responsiveHeight.height2 + responsiveHeight.height3) * multiplier}px`}
+                left="0"
+              />
+
+              <Box
+                height={`${(responsiveHeight.height1 + responsiveHeight.height2 + responsiveHeight.height3) * multiplier}px`}
+                width="3880px"
+                bg="red"
+                position="absolute"
+                top="0"
+                left="0"
+              />
+
+              <Box
+                height={`${(responsiveHeight.height1 + responsiveHeight.height2) * multiplier}px`}
+                width={`${(responsiveWidth.width2 + responsiveWidth.width3) * 2 + responsiveWidth.width4}px`}
+                bg="#76E4F7"
+                position="absolute"
+                top="0"
+                left={`${responsiveWidth.width1}px`}
+              />
+
+              <Box
+                height={`${responsiveHeight.height1 * multiplier}px`}
+                width={`${responsiveWidth.width3 * 2 + responsiveWidth.width4}px`}
+                bg="#F6E05E"
+                position="absolute"
+                top="0"
+                left={`${responsiveWidth.width1 + responsiveWidth.width2}px`}
+              />
+
+              <Box
+                height={`${(responsiveHeight.height1 - 1) * multiplier}px`}
+                width={`${responsiveWidth.width4}px`}
+                bg="white"
+                position="absolute"
+                top="0"
+                left={`${responsiveWidth.width1 + responsiveWidth.width2 + responsiveWidth.width3}px`}
+              />
             </Box>
           </Box>
         </Flex>
