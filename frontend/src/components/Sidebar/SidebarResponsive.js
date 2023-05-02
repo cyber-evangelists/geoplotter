@@ -21,11 +21,10 @@ import { CreativeTimLogo } from "components/Icons/Icons";
 import { Separator } from "components/Separator/Separator";
 import { SidebarHelp } from "components/Sidebar/SidebarHelp";
 import React from "react";
-import { NavLink, useLocation } from "react-router-dom";
 
 function SidebarResponsive(props) {
   // to check for active links and opened collapses
-  let location = useLocation();
+  let location = null;
   // this is for the rest of the collapses
   const [state, setState] = React.useState({});
   const mainPanel = React.useRef();
@@ -72,7 +71,7 @@ function SidebarResponsive(props) {
         );
       }
       return (
-        <NavLink to={ prop.path} key={prop.name}>
+        <NavLink to={prop.path} key={prop.name}>
           {activeRoute(prop.path) === "active" ? (
             <Button
               boxSize="initial"

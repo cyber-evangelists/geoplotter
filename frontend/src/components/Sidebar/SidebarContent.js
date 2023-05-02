@@ -13,29 +13,25 @@ import { CreativeTimLogo } from "components/Icons/Icons";
 import { Separator } from "components/Separator/Separator";
 import { SidebarHelp } from "components/Sidebar/SidebarHelp";
 import React from "react";
-import { NavLink, useLocation } from "react-router-dom";
+import NextLink from "next/link";
 
 // this function creates the links and collapses that appear in the sidebar (left menu)
 
 
-const SidebarContent = ({ logoText, routes }) => {
+const SidebarContent = ({ logoText, routes, activeRoute }) => {
 
   // to check for active links and opened collapses
-  let location = useLocation();
+  let location = null;
   // this is for the rest of the collapses
   const [state, setState] = React.useState({});
 
-  // verifies if routeName is the one active (in browser input)
-  const activeRoute = (routeName) => {
-    return location.pathname === routeName ? "active" : "";
-  };
   const createLinks = (routes) => {
     // Chakra Color Mode
     const activeBg = useColorModeValue("white", "gray.700");
     const inactiveBg = useColorModeValue("white", "gray.700");
     const activeColor = useColorModeValue("gray.700", "white");
     const inactiveColor = useColorModeValue("gray.400", "gray.400");
-    
+
     return routes.map((prop, key) => {
       if (prop.redirect) {
         return null;
@@ -58,17 +54,15 @@ const SidebarContent = ({ logoText, routes }) => {
               }}
               py="12px"
             >
-              {document.documentElement.dir === "rtl"
-                ? prop.rtlName
-                : prop.name}
+              {prop.name}
             </Text>
             {createLinks(prop.views)}
           </div>
         );
       }
       return (
-        <NavLink to={prop.path} key={prop.name}>
-          {activeRoute(prop.path) === "active" ? (
+        <NextLink key={prop.name} href={prop.path}>
+          {activeRoute === prop.path ? (
             <Button
               boxSize="initial"
               justifyContent="flex-start"
@@ -112,9 +106,7 @@ const SidebarContent = ({ logoText, routes }) => {
                   </IconBox>
                 )}
                 <Text color={activeColor} my="auto" fontSize="sm">
-                  {document.documentElement.dir === "rtl"
-                    ? prop.rtlName
-                    : prop.name}
+                  {prop.name}
                 </Text>
               </Flex>
             </Button>
@@ -162,14 +154,12 @@ const SidebarContent = ({ logoText, routes }) => {
                   </IconBox>
                 )}
                 <Text color={inactiveColor} my="auto" fontSize="sm">
-                  {document.documentElement.dir === "rtl"
-                    ? prop.rtlName
-                    : prop.name}
+                  {prop.name}
                 </Text>
               </Flex>
             </Button>
           )}
-        </NavLink>
+        </NextLink>
       );
     });
   };

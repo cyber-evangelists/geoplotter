@@ -10,19 +10,19 @@ router = APIRouter()
 
 
 @router.post("/login")
-async def user_login(body: LoginRequest, response: Response):
+async def user_login(body: LoginRequest):
     user = await UserEntity.find_one({"email": body.email})
     if mybcrypt.check(body.password, user.password):
         payload = {"userId": str(user.id)}
-        response.set_cookie({"Authorization": myjwt.encode(payload)})
-
-        return PlainTextResponse("ok")
+        response = PlainTextResponse("ok")
+        response.set_cookie("Authorization", myjwt.encode(payload))
+        return response
 
     raise HTTPException(detail="Invalid credentials", status_code=401)
 
 
 @router.post("/signup")
-async def user_register(body: SignupRequest, response: Response):
+async def user_register(body: SignupRequest):
     user = await UserEntity.find_one({"email": body.email})
     if user:
         raise HTTPException(detail="Email is already in use", status_code=400)
@@ -34,6 +34,7 @@ async def user_register(body: SignupRequest, response: Response):
     await user_entity.insert()
 
     inserted_user = await UserEntity.find_one({"email": body.email})
+    response = PlainTextResponse("ok")
     payload = {"userId": str(inserted_user.id)}
     response.set_cookie("Authorization", myjwt.encode(payload))
-    return PlainTextResponse("ok")
+    return response

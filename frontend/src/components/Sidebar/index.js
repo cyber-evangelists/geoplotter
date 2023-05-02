@@ -15,7 +15,7 @@ function Sidebar(props) {
 
   const { logoText, routes, sidebarVariant } = props;
 
-   //  BRAND
+  //  BRAND
   //  Chakra Color Mode
   let sidebarBg = "none";
   let sidebarRadius = "0px";
@@ -51,6 +51,7 @@ function Sidebar(props) {
             logoText={"INFRAPI"}
             display="none"
             sidebarVariant={sidebarVariant}
+            activeRoute={props.activeRoute}
           />
         </Box>
       </Box>
