@@ -13,36 +13,12 @@ import { CalendarIcon } from "@chakra-ui/icons";
 
 var dashRoutes = [
   {
-    path: "/dashboard",
-    name: "Dashboard",
-    rtlName: "لوحة القيادة",
-    icon: <HomeIcon color="inherit" />,
-    component: Main,
-    layout: "/admin",
-  },
-  {
-    path: "/shape",
-    name: "Shape",
-    rtlName: "لوحة القيادة",
-    icon: <CreditIcon color="inherit" />,
-    component: Shape,
-    layout: "/admin",
-  },
-  {
-    path: "/boxModel",
-    name: "BoxModel",
-    rtlName: "لوحة القيادة",
-    icon: <CalendarIcon color="inherit" />,
-    component: BoxModel,
-    layout: "/admin",
-  },
-  {
     path: "/login",
     name: "Login",
     rtlName: "لوحة القيادة",
     icon: <StatsIcon color="inherit" />,
     component: Login,
-    layout: "/admin",
+    layout: "/",
   },
   {
     path: "/signup",
@@ -50,7 +26,31 @@ var dashRoutes = [
     rtlName: "لوحة القيادة",
     icon: <CreditIcon color="inherit" />,
     component: Signup,
-    layout: "/admin",
+    layout: "/",
+  },
+  {
+    path: "/dashboard",
+    name: "Dashboard",
+    rtlName: "لوحة القيادة",
+    icon: <HomeIcon color="inherit" />,
+    component: Main,
+    layout: "/dashboard",
+  },
+  {
+    path: "/shape",
+    name: "Shape",
+    rtlName: "لوحة القيادة",
+    icon: <CreditIcon color="inherit" />,
+    component: Shape,
+    layout: "/dashboard",
+  },
+  {
+    path: "/boxModel",
+    name: "BoxModel",
+    rtlName: "لوحة القيادة",
+    icon: <CalendarIcon color="inherit" />,
+    component: BoxModel,
+    layout: "/dashboard",
   },
 ];
 export default dashRoutes;

@@ -15,7 +15,7 @@ function Sidebar(props) {
 
   const { logoText, routes, sidebarVariant } = props;
 
-  //  BRAND
+   //  BRAND
   //  Chakra Color Mode
   let sidebarBg = "none";
   let sidebarRadius = "0px";

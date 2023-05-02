@@ -19,12 +19,19 @@ import MainPanel from '../components/Layout/MainPanel';
 import PanelContainer from '../components/Layout/PanelContainer';
 import PanelContent from '../components/Layout/PanelContent';
 
-export default function Dashboard(props) {
+export default function DashboardLayout(props) {
 	console.log('props == ', props)
 	const { ...rest } = props;
 	// states and functions
 	const [sidebarVariant, setSidebarVariant] = useState('transparent');
 	const [fixed, setFixed] = useState(false);
+
+	
+	const dashboardRoutes = routes.filter((items, i) => {
+		if (items.layout === "/dashboard") {
+			return items
+		}
+	})
 
 	// functions for changing the states from components
 	const getRoute = () => {
@@ -94,7 +101,7 @@ export default function Dashboard(props) {
 	return (
 		<ChakraProvider theme={theme} resetCss={false}>
 			<Sidebar
-				routes={routes}
+				routes={dashboardRoutes}
 				logoText={'INFRAPI'}
 				display='none'
 				sidebarVariant={sidebarVariant}

@@ -14,7 +14,6 @@ export default function Main() {
                 email,
                 password,
             });
-
             console.log(data);
         } catch (error) {
             toast({
@@ -27,6 +26,7 @@ export default function Main() {
         }
     }
     return (
+        <>
         <Center pt="300px">
             <Box>
                 <Input type='email' placeholder="Email" mb="3"
@@ -38,5 +38,6 @@ export default function Main() {
                 <Button onClick={handleSubmit}>Submit</Button>
             </Box>
         </Center>
+        </>
     );
 }
