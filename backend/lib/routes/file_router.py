@@ -1,11 +1,16 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, File, UploadFile
 
 from lib.models.responses.get_file_response import GetFileResponse
+from lib import config
 
 router = APIRouter()
 
 
-@router.get("/", include_in_schema=False)
-@router.get("", response_model=GetFileResponse)
-def get_file_url():
-    return {"url": "/assets/example.zip"}
+@router.post("/", include_in_schema=False)
+@router.post("", response_model=GetFileResponse)
+def create_file_url(file: UploadFile):
+    file_location = f"{config.UPLOAD_DIR}/{file.filename}"
+    with open(file_location, "wb+") as file_object:
+        file_object.write(file.file.read())
+
+    return {"url": f"/assets/{file.filename}"}
