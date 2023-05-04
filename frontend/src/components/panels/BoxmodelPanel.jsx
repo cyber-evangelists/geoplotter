@@ -1,20 +1,12 @@
-import * as React from 'react'
-import { Flex, Box, Text, Input, Button, Center, useToast } from '@chakra-ui/react';
+import * as React from 'react';
+import {
+  Flex, Box, Text, Input, Button, Center, useToast,
+} from '@chakra-ui/react';
 import html2canvas from 'html2canvas';
 
 const multiplier = 10;
 
-function captureScreen() {
-  const captureArea = document.getElementById('capture-area');
-
-  html2canvas(captureArea, { quality: 1, backgroundColor: "white" }).then(function (canvas) {
-    const link = document.createElement('a');
-    link.download = 'screenshot.jpg';
-    link.href = canvas.toDataURL('image/jpeg');
-    link.click();
-  });
-}
-function PlotBoxModel() {
+export default function PlotBoxModel() {
   const [width1, setWidth1] = React.useState(1620);
   const [width2, setWidth2] = React.useState(100);
   const [width3, setWidth3] = React.useState(200);
@@ -24,7 +16,7 @@ function PlotBoxModel() {
     width2: 100,
     width3: 200,
     width4: 20,
-  })
+  });
 
   const [height1, setHeight1] = React.useState(5);
   const [height2, setHeight2] = React.useState(5);
@@ -35,17 +27,15 @@ function PlotBoxModel() {
     height2: 5,
     height3: 20,
     height4: 100,
-  })
+  });
+
   const [changeColor1, setChangeColor1] = React.useState(2);
   const [changeColor2, setChangeColor2] = React.useState(3);
   const [changeColor3, setChangeColor3] = React.useState(5);
   const [changeColor4, setChangeColor4] = React.useState(1);
 
-  const [rechargeNum, setRechargeNum] = React.useState(120)
-  const toast = useToast()
-
-  React.useEffect(() => {
-  }, [width1, width2, width3, width4, responsiveWidth, height1, height2, height3, height4, responsiveHeight])
+  const [rechargeNum, setRechargeNum] = React.useState(120);
+  const toast = useToast();
 
   const handleAccept = () => {
     try {
@@ -57,20 +47,19 @@ function PlotBoxModel() {
           duration: 2000,
           isClosable: true,
         });
-      }
-      else {
+      } else {
         setResponsiveWidth({
-          width1: width1,
-          width2: width2,
-          width3: width3,
-          width4: width4,
-        })
+          width1: Number(width1),
+          width2: Number(width2),
+          width3: Number(width3),
+          width4: Number(width4),
+        });
         setResponsiveHeight({
-          height1: height1,
-          height2: height2,
-          height3: height3,
-          height4: height4,
-        })
+          height1: Number(height1),
+          height2: Number(height2),
+          height3: Number(height3),
+          height4: Number(height4),
+        });
         toast({
           position: 'top',
           title: 'Successfully Accepted',
@@ -88,10 +77,11 @@ function PlotBoxModel() {
         isClosable: true,
       });
     }
-  }
+  };
+
   return (
     <>
-      <Box id="capture-area">
+      <Box id="capture-area" overflow="auto" bgColor="white">
         <Flex>
           <Box w="13%">
             <Flex direction={'column'} mt='88%'>
@@ -112,7 +102,12 @@ function PlotBoxModel() {
               </Flex>
             </Box>
 
-            <Box position={'relative'} mt='7%'>
+            <Box
+              position={'relative'}
+              mt='7%'
+              minHeight={`${(responsiveHeight.height1 + responsiveHeight.height2 + responsiveHeight.height3) * multiplier + responsiveHeight.height4}px`}
+              minWidth="4000px"
+            >
               <Box
                 height={`${responsiveHeight.height4}px`}
                 width="3880px"
@@ -161,7 +156,7 @@ function PlotBoxModel() {
           </Box>
         </Flex>
 
-        <Box mt={20} ml={32} width={'80%'}>
+        <Box mt="10" ml={32} width={'80%'}>
           <Text fontSize='md' ml={180}>K(m/s)</Text>
           <Flex>
             <Box mt={2}>
@@ -192,4 +187,17 @@ function PlotBoxModel() {
     </>
   );
 }
-export default PlotBoxModel;
+
+function captureScreen() {
+  const captureArea = document.getElementById('capture-area');
+
+  captureArea.style.setProperty('overflow', 'visible');
+  html2canvas(captureArea, { quality: 1, backgroundColor: 'white', width: captureArea.scrollWidth }).then((canvas) => {
+    captureArea.style.setProperty('overflow', 'auto');
+
+    const link = document.createElement('a');
+    link.download = 'screenshot.jpg';
+    link.href = canvas.toDataURL('image/jpeg');
+    link.click();
+  });
+}
