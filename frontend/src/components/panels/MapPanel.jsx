@@ -1,17 +1,17 @@
-import { Box, Button, Card, Input } from '@chakra-ui/react';
+import {
+  Box, Button, Card, Input,
+} from '@chakra-ui/react';
 import Leaflet from 'leaflet';
-import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
+import { MapContainer, TileLayer, useMap } from 'react-leaflet';
 import React, { useEffect, useState } from 'react';
-import shp from "shpjs";
+import shp from 'shpjs';
 import 'leaflet/dist/leaflet.css';
 
 export default function MapPanel() {
+  const [newFile, setNewFile] = useState(null);
   const [file, setFile] = useState(null);
-  const [accept, setAccept] = useState(false);
 
-  const handleAccept = () => {
-    setAccept(true);
-  };
+  const handleAccept = () => setFile(newFile);
 
   return (
     <Box position="relative">
@@ -20,7 +20,7 @@ export default function MapPanel() {
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
-        {accept && <Shapefile zipUrl={file} />}
+        {file && <Shapefile zipUrl={file} />}
       </MapContainer>
       <Card
         position="absolute"
@@ -31,7 +31,7 @@ export default function MapPanel() {
         bgColor="white"
         p="5"
       >
-        <Input type="file" onChange={(e) => setFile(e.target.files[0])} pt="1" />
+        <Input type="file" onChange={(e) => setNewFile(e.target.files[0])} pt="1" />
         <Button colorScheme="teal" onClick={handleAccept} mt="3">Accept</Button>
       </Card>
     </Box>
@@ -51,7 +51,7 @@ function Shapefile({ zipUrl }) {
             for (var key in f.properties) {
               out.push(key + ": " + f.properties[key]);
             }
-            l.bindPopup(out.join("<br />"));
+            l.bindPopup(out.join('<br />'));
           }
         },
       },
@@ -59,10 +59,16 @@ function Shapefile({ zipUrl }) {
 
     const fr = new FileReader();
     fr.onload = (event) => {
-      shp(event.target.result).then((data) => geo.addData(data));
+      shp(event.target.result).then((data) => {
+        geo.addData(data);
+
+        const allCoords = data.features.map((f) => f.geometry.coordinates[0])
+          .reduce((c1, c2) => [...c1, ...c2]);
+        map.fitBounds(new Leaflet.LatLngBounds(allCoords.map(([lng, lat]) => [lat, lng])));
+      });
     };
     fr.readAsArrayBuffer(zipUrl);
-  }, []);
+  }, [zipUrl]);
 
   return null;
 }

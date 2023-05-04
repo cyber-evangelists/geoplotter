@@ -1,7 +1,9 @@
-import { Button, Box, Center, Input, useToast } from '@chakra-ui/react';
-import axios from "axios";
-import React from 'react';
+import {
+  Button, Box, Center, Input, useToast,
+} from '@chakra-ui/react';
+import axios from 'axios';
 import { useRouter } from 'next/router';
+import React from 'react';
 
 export default function Main() {
   const [email, setEmail] = React.useState('');
@@ -15,6 +17,7 @@ export default function Main() {
         email,
         password,
       });
+      localStorage.setItem('token', data.token);
       router.replace('/map');
     } catch (error) {
       toast({

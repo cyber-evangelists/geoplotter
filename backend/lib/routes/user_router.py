@@ -1,27 +1,26 @@
-from fastapi import APIRouter, HTTPException, Response
-from fastapi.responses import PlainTextResponse
+from fastapi import APIRouter, HTTPException
 
 from lib.models.entities.user_entity import UserEntity
 from lib.models.requests.login_request import LoginRequest
 from lib.models.requests.signup_request import SignupRequest
+from lib.models.responses.auth_response import AuthResponse
 from lib.services import mybcrypt, myjwt
 
 router = APIRouter()
 
 
-@router.post("/login")
+@router.post("/login", response_model=AuthResponse)
 async def user_login(body: LoginRequest):
     user = await UserEntity.find_one({"email": body.email})
     if mybcrypt.check(body.password, user.password):
         payload = {"userId": str(user.id)}
-        response = PlainTextResponse("ok")
-        response.set_cookie("Authorization", myjwt.encode(payload))
-        return response
+
+        return {"token": myjwt.encode(payload)}
 
     raise HTTPException(detail="Invalid credentials", status_code=401)
 
 
-@router.post("/signup")
+@router.post("/signup", response_model=AuthResponse)
 async def user_register(body: SignupRequest):
     user = await UserEntity.find_one({"email": body.email})
     if user:
@@ -34,7 +33,6 @@ async def user_register(body: SignupRequest):
     await user_entity.insert()
 
     inserted_user = await UserEntity.find_one({"email": body.email})
-    response = PlainTextResponse("ok")
     payload = {"userId": str(inserted_user.id)}
-    response.set_cookie("Authorization", myjwt.encode(payload))
-    return response
+
+    return {"token": myjwt.encode(payload)}

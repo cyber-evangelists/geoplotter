@@ -17,6 +17,7 @@ export default function Main() {
     try {
       if (registerUsers.password?.length && registerUsers.password === registerUsers.confirmPassword) {
         const { data } = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/users/signup`, registerUsers);
+        localStorage.setItem('token', data.token);
         router.replace('/map');
       } else {
         toast({
