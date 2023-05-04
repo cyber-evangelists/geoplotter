@@ -10,4 +10,4 @@ RUN poetry install --no-root
 
 COPY . .
 
-CMD poetry run uvicorn lib.main:app --host 0.0.0.0
+CMD poetry run uvicorn lib.main:app --host 0.0.0.0 --log-config ./log-config.ini
