@@ -18,11 +18,14 @@ import FixedPlugin from '../components/FixedPlugin/FixedPlugin';
 import MainPanel from '../components/Layout/MainPanel';
 import PanelContainer from '../components/Layout/PanelContainer';
 import PanelContent from '../components/Layout/PanelContent';
+
 export default function Dashboard(props) {
+	console.log('props == ', props)
 	const { ...rest } = props;
 	// states and functions
 	const [sidebarVariant, setSidebarVariant] = useState('transparent');
 	const [fixed, setFixed] = useState(false);
+
 	// functions for changing the states from components
 	const getRoute = () => {
 		return window.location.pathname !== '/admin/full-screen-maps';
@@ -69,15 +72,18 @@ export default function Dashboard(props) {
 	};
 	const getRoutes = (routes) => {
 		return routes.map((prop, key) => {
-			if (prop.collapse) {
-				return getRoutes(prop.views);
+			// if (prop.collapse) {
+			// 	return getRoutes(prop.views);
+			// }
+			// if (prop.category === 'account') {
+			// 	return getRoutes(prop.views);
+			// }
+			if (prop.layout === '/') {
+				return <Route path={prop.path} component={prop.component} key={key} />;
+			} else if (prop.layout === '/dashboard') {
+				return <Route path={prop.path} component={prop.component} key={key} />;
 			}
-			if (prop.category === 'account') {
-				return getRoutes(prop.views);
-			}
-			if (prop.layout === '/admin') {
-				return <Route path={prop.layout + prop.path} component={prop.component} key={key} />;
-			} else {
+			else {
 				return null;
 			}
 		});
@@ -104,7 +110,7 @@ export default function Dashboard(props) {
 						<PanelContainer>
 							<Switch>
 								{getRoutes(routes)}
-								<Redirect from='/admin' to='/admin/dashboard' />
+								{/* <Redirect from='/admin' to='/admin/dashboard' /> */}
 							</Switch>
 						</PanelContainer>
 					</PanelContent>

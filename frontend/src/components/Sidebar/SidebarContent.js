@@ -1,34 +1,30 @@
 /*eslint-disable*/
 // chakra imports
 import {
-    Box,
-    Button, Flex,
-    Link,
-    Stack,
-    Text,
-    useColorModeValue
+  Box,
+  Button, Flex,
+  Link,
+  Stack,
+  Text,
+  useColorModeValue
 } from "@chakra-ui/react";
 import IconBox from "components/Icons/IconBox";
 import { CreativeTimLogo } from "components/Icons/Icons";
 import { Separator } from "components/Separator/Separator";
 import { SidebarHelp } from "components/Sidebar/SidebarHelp";
 import React from "react";
-import { NavLink, useLocation } from "react-router-dom";
+import NextLink from "next/link";
 
 // this function creates the links and collapses that appear in the sidebar (left menu)
 
 
-const SidebarContent = ({ logoText, routes }) => {
+const SidebarContent = ({ logoText, routes, activeRoute }) => {
 
-    // to check for active links and opened collapses
-  let location = useLocation();
+  // to check for active links and opened collapses
+  let location = null;
   // this is for the rest of the collapses
   const [state, setState] = React.useState({});
 
-  // verifies if routeName is the one active (in browser input)
-  const activeRoute = (routeName) => {
-    return location.pathname === routeName ? "active" : "";
-  };
   const createLinks = (routes) => {
     // Chakra Color Mode
     const activeBg = useColorModeValue("white", "gray.700");
@@ -58,17 +54,15 @@ const SidebarContent = ({ logoText, routes }) => {
               }}
               py="12px"
             >
-              {document.documentElement.dir === "rtl"
-                ? prop.rtlName
-                : prop.name}
+              {prop.name}
             </Text>
             {createLinks(prop.views)}
           </div>
         );
       }
       return (
-        <NavLink to={prop.layout + prop.path} key={prop.name}>
-          {activeRoute(prop.layout + prop.path) === "active" ? (
+        <NextLink key={prop.name} href={prop.path}>
+          {activeRoute === prop.path ? (
             <Button
               boxSize="initial"
               justifyContent="flex-start"
@@ -112,9 +106,7 @@ const SidebarContent = ({ logoText, routes }) => {
                   </IconBox>
                 )}
                 <Text color={activeColor} my="auto" fontSize="sm">
-                  {document.documentElement.dir === "rtl"
-                    ? prop.rtlName
-                    : prop.name}
+                  {prop.name}
                 </Text>
               </Flex>
             </Button>
@@ -162,45 +154,43 @@ const SidebarContent = ({ logoText, routes }) => {
                   </IconBox>
                 )}
                 <Text color={inactiveColor} my="auto" fontSize="sm">
-                  {document.documentElement.dir === "rtl"
-                    ? prop.rtlName
-                    : prop.name}
+                  {prop.name}
                 </Text>
               </Flex>
             </Button>
           )}
-        </NavLink>
+        </NextLink>
       );
     });
   };
 
-    const links = <>{createLinks(routes)}</>;
-
+  const links = <>{createLinks(routes)}</>
   return (
     <>
-        <Box pt={"25px"} mb="12px">
-      <Link
-        href={`${process.env.PUBLIC_URL}/#/`}
-        target="_blank"
-        display="flex"
-        lineHeight="100%"
-        mb="30px"
-        fontWeight="bold"
-        justifyContent="center"
-        alignItems="center"
-        fontSize="11px"
-      >
-        <CreativeTimLogo w="32px" h="32px" me="10px" />
-        <Text fontSize="sm" mt="3px">
-          {logoText}
-        </Text>
-      </Link>
-      <Separator></Separator>
-    </Box>
-          <Stack direction="column" mb="40px">
-            <Box>{links}</Box>
-          </Stack>
-          <SidebarHelp />
+      <Box pt={"25px"} mb="12px">
+        <NextLink href="/" passHref>
+          <Link
+            target="_blank"
+            display="flex"
+            lineHeight="100%"
+            mb="30px"
+            fontWeight="bold"
+            justifyContent="center"
+            alignItems="center"
+            fontSize="11px"
+          >
+            <CreativeTimLogo w="32px" h="32px" me="10px" />
+            <Text fontSize="sm" mt="3px">
+              {logoText}
+            </Text>
+          </Link>
+        </NextLink>
+        <Separator></Separator>
+      </Box>
+      <Stack direction="column" mb="40px">
+        <Box>{links}</Box>
+      </Stack>
+      <SidebarHelp />
     </>
   )
 }

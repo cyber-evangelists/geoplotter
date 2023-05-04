@@ -51,6 +51,7 @@ function Sidebar(props) {
             logoText={"INFRAPI"}
             display="none"
             sidebarVariant={sidebarVariant}
+            activeRoute={props.activeRoute}
           />
         </Box>
       </Box>
